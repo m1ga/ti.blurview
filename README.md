@@ -11,8 +11,14 @@ Based on: https://github.com/CameraKit/blurkit-android
 ```
 
 ```xml
-<BlurView />
+<BlurView module="ti.blurview"/>
 ```
+or
+```javascript
+var blur = require("ti.blurview");
+var blurView = blur.createBlurView({});
+```
+
 
 Methods:
 * startBlur()
