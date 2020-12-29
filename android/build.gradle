@@ -1,0 +1,4 @@
+
+dependencies {
+	implementation 'io.alterac.blurkit:blurkit:1.1.0'
+}

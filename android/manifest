@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0.0
+apiversion: 4
+architectures: arm64-v8a armeabi-v7a x86 x86_64
+description: ti.blurview
+author: Michael Gangolf
+license: Apache 2.0
+copyright: Copyright (c) 2020 Michael Gangolf
+
+# these should not be edited
+name: ti.blurview
+moduleid: ti.blurview
+guid: 2e3a4f09-6eb6-4b4c-a652-88f340d4d7a0
+platform: android
+minsdk: 9.0.0.GA
