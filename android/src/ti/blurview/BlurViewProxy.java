@@ -32,8 +32,9 @@ public class BlurViewProxy extends TiViewProxy
 	private static final String LCAT = "BlurViewProxy";
 	private static final boolean DBG = TiConfig.LOGD;
 	BlurLayout blurLayout;
-	private int blurRadius = 2;
-	private float downscaleFactor = 0.15f;
+	private int blurRadius = -1;
+	private float downscaleFactor = -1.0f;
+	private int fps = -1;
 
 	private class BlurView extends TiUIView
 	{
@@ -52,9 +53,17 @@ public class BlurViewProxy extends TiViewProxy
 			LayoutInflater inflater = LayoutInflater.from(proxy.getActivity());
 			viewWrapper = inflater.inflate(resId_viewHolder, null);
 			blurLayout =  (BlurLayout) viewWrapper.findViewById(resIdPublish);
-			blurLayout.setBlurRadius(blurRadius);
-			blurLayout.setDownscaleFactor(downscaleFactor);
+			if (blurRadius != -1) {
+				blurLayout.setBlurRadius(blurRadius);
+			}
+			if (downscaleFactor != -1.0f) {
+				blurLayout.setDownscaleFactor(downscaleFactor);
+			}
+			if (fps != -1) {
+				blurLayout.setFPS(fps);
+			}
 			setNativeView(viewWrapper);
+			blurLayout.startBlur();
 		}
 
 		@Override
@@ -92,6 +101,9 @@ public class BlurViewProxy extends TiViewProxy
 		if (options.containsKey("downscaleFactor")) {
 			downscaleFactor = TiConvert.toFloat(options.get("downscaleFactor"),0.15f);
 		}
+		if (options.containsKey("fps")) {
+			fps = TiConvert.toInt(options.get("fps"), -1);
+		}
 	}
 
 	// Methods
@@ -99,6 +111,13 @@ public class BlurViewProxy extends TiViewProxy
 	public void startBlur()
 	{
 		blurLayout.startBlur();
+	}
+
+	// Methods
+	@Kroll.method
+	public void pauseBlur()
+	{
+		blurLayout.pauseBlur();
 	}
 
 	@Kroll.setProperty
@@ -109,5 +128,15 @@ public class BlurViewProxy extends TiViewProxy
 	@Kroll.setProperty
 	public void blurRadius(int factor){
 		blurLayout.setBlurRadius(factor);
+	}
+
+	@Kroll.setProperty
+	public void fps(int factor){
+		blurLayout.setFPS(factor);
+	}
+
+	@Kroll.method
+	public void invalidate(){
+		blurLayout.invalidate();
 	}
 }
