@@ -19,13 +19,11 @@ var blur = require("ti.blurview");
 var blurView = blur.createBlurView({});
 ```
 
-<b>Attention</b>
-You have to run `startBlur()` in the `open` event.
-
-
 <b>Methods:</b>
 * startBlur()
 * pauseBlur()
+* lockView()
+* unlockView()
 
 <b>Properties:</b>
 * fps (int)
@@ -34,63 +32,110 @@ You have to run `startBlur()` in the `open` event.
 
 <b>Example:</b>
 
-```xml
-<Alloy>
-	<Window backgroundColor="#fff" onOpen="onOpen">
-		<ImageView id="img" image="/peppers.png" width="640" height="400" top="0" scale="1"/>
-
-		<BlurView module="ti.blurview" id="view_blur" downscaleFactor="0.25" blurRadius="10" width="Ti.UI.FILL" height="100" top="200"/>
-
-		<View bottom="0" height="Ti.UI.SIZE" width="Ti.UI.FILL" layout="vertical" backgroundColor="#fff">
-			<Label text="Blur: 2" id="lbl_blur" color="#000" left="10"/>
-			<Slider min="1" max="20" left="20" right="20" onChange="onChange1" value="10"/>
-
-			<Label text="FPS: 0" id="lbl_fps" color="#000" left="10"/>
-			<Slider min="0" max="60" left="20" right="20" onChange="onChange3" value="30"/>
-
-			<Label text="Downscale: 0.1" id="lbl_down" color="#000" left="10"/>
-			<Slider min="1" max="100" left="20" right="20" onChange="onChange2" value="25"/>
-
-			<Button title="move" onClick="onClickMove"/>
-			<Button title="reblur" onClick="onClickBlur" bottom="10"/>
-		</View>
-	</Window>
-</Alloy>
-```
-
 ```javascript
-function onChange1(e) {
-	$.view_blur.blurRadius = Math.round(e.value);
-	$.lbl_blur.text = "Blur: " + Math.round(e.value);
-}
+var win = Ti.UI.createWindow({
+	backgroundColor: "#fff"
+});
+var img = Ti.UI.createImageView({
+	image: "https://raw.githubusercontent.com/CameraKit/blurkit-android/master/demo/src/main/res/drawable-nodpi/peppers.png",
+	width: 640,
+	height: 400,
+	top: 0
+})
+var blurview = require("ti.blurview").createBlurView({
+	downscaleFactor: 0.25,
+	blurRadius: 20,
+	width: Ti.UI.FILL,
+	height: 100,
+	top: 100
+});
+var view_menu = Ti.UI.createView({
+	bottom: 0,
+	height: Ti.UI.SIZE,
+	width: Ti.UI.FILL,
+	layout: "vertical",
+	backgroundColor: "#efefef"
+})
+win.add([img, blurview, view_menu]);
 
-function onChange2(e) {
-	$.view_blur.downscaleFactor = (e.value / 100).toFixed(2);
-	$.lbl_down.text = "Downscale: " + (e.value / 100).toFixed(2);
-}
+var lbl1 = Ti.UI.createLabel({
+	text: "Blur: 2",
+	color: "#000",
+	left: 10,
+	top: 10
+});
+var lbl2 = Ti.UI.createLabel({
+	text: "FPS: 0",
+	color: "#000",
+	left: 10
+});
+var lbl3 = Ti.UI.createLabel({
+	text: "Downscale: 0.1",
+	color: "#000",
+	left: 10
+});
+var slider1 = Ti.UI.createSlider({
+	min: 1,
+	max: 20,
+	left: 20,
+	right: 20,
+	value: 20,
+	bottom: 10
+})
+var slider2 = Ti.UI.createSlider({
+	min: 0,
+	max: 60,
+	left: 20,
+	right: 20,
+	value: 30,
+	bottom: 10
+})
+var slider3 = Ti.UI.createSlider({
+	min: 1,
+	max: 100,
+	left: 20,
+	right: 20,
+	value: 25,
+	bottom: 10
+})
+view_menu.add([lbl1, slider1, lbl2, slider2, lbl3, slider3]);
 
-function onChange3(e) {
-	$.view_blur.fps = Math.round(e.value);
-	$.lbl_fps.text = "FPS: " + Math.round(e.value);
-}
+slider1.addEventListener("change", function(e) {
+	blurview.blurRadius = Math.round(e.value);
+	lbl1.text = "Blur: " + Math.round(e.value);
+});
+slider2.addEventListener("change", function(e) {
+	blurview.fps = Math.round(e.value);
+	lbl2.text = "FPS: " + Math.round(e.value);
+});
+slider3.addEventListener("change", function(e) {
+	blurview.downscaleFactor = (e.value / 100).toFixed(2);
+	lbl3.text = "Downscale: " + (e.value / 100).toFixed(2);
+});
 
-function onClickMove(e) {
-	$.view_blur.animate({
-		top: 500,
-		duration: 5000,
+var btn1 = Ti.UI.createButton({
+	title: "move"
+})
+var btn2 = Ti.UI.createButton({
+	title: "reblur",
+	bottom: 10
+})
+
+view_menu.add([btn1, btn2]);
+
+btn1.addEventListener("click", function(e) {
+	blurview.animate({
+		top: 400,
+		duration: 4000,
 		autoreverse: true
 	})
-}
+});
 
-function onClickBlur(e) {
-	$.view_blur.unlockView();
-	$.view_blur.invalidate();
-	$.view_blur.startBlur();
-}
+btn2.addEventListener("click", function(e) {
+	blurview.unlockView();
+	blurview.invalidate();
+	blurview.startBlur();
+});
 
-$.index.open();
-
-function onOpen(e) {
-	$.view_blur.startBlur();
-}
+win.open();
 ```

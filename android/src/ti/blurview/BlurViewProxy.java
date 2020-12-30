@@ -8,6 +8,14 @@
  */
 package ti.blurview;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import io.alterac.blurkit.BlurLayout;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
@@ -17,15 +25,7 @@ import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.view.TiUIView;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.app.Activity;
-import io.alterac.blurkit.BlurLayout;
-import android.view.View;
-
-@Kroll.proxy(creatableInModule=TiBlurViewModule.class)
+@Kroll.proxy(creatableInModule = TiBlurViewModule.class)
 public class BlurViewProxy extends TiViewProxy
 {
 	// Standard Debugging variables
@@ -38,7 +38,8 @@ public class BlurViewProxy extends TiViewProxy
 
 	private class BlurView extends TiUIView
 	{
-		public BlurView(TiViewProxy proxy) {
+		public BlurView(TiViewProxy proxy)
+		{
 			super(proxy);
 			String packageName = proxy.getActivity().getPackageName();
 			Resources resources = proxy.getActivity().getResources();
@@ -52,7 +53,7 @@ public class BlurViewProxy extends TiViewProxy
 
 			LayoutInflater inflater = LayoutInflater.from(proxy.getActivity());
 			viewWrapper = inflater.inflate(resId_viewHolder, null);
-			blurLayout =  (BlurLayout) viewWrapper.findViewById(resIdPublish);
+			blurLayout = (BlurLayout) viewWrapper.findViewById(resIdPublish);
 
 			if (blurRadius != -1) {
 				blurLayout.setBlurRadius(blurRadius);
@@ -64,6 +65,23 @@ public class BlurViewProxy extends TiViewProxy
 				blurLayout.setFPS(fps);
 			}
 			setNativeView(viewWrapper);
+
+			ViewTreeObserver.OnGlobalLayoutListener layoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+				public void onGlobalLayout()
+				{
+					blurLayout.startBlur();
+					blurLayout.lockView();
+
+					try {
+						getNativeView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+					} catch (IllegalStateException e) {
+						if (Log.isDebugModeEnabled()) {
+							Log.w(LCAT, "Unable to remove the OnGlobalLayoutListener.", e.getMessage());
+						}
+					}
+				}
+			};
+			getNativeView().getViewTreeObserver().addOnGlobalLayoutListener(layoutListener);
 		}
 
 		@Override
@@ -72,7 +90,6 @@ public class BlurViewProxy extends TiViewProxy
 			super.processProperties(d);
 		}
 	}
-
 
 	// Constructor
 	public BlurViewProxy()
@@ -96,10 +113,10 @@ public class BlurViewProxy extends TiViewProxy
 		super.handleCreationDict(options);
 
 		if (options.containsKey("blurFactor")) {
-			blurRadius = TiConvert.toInt(options.get("blurRadius"),2);
+			blurRadius = TiConvert.toInt(options.get("blurRadius"), 2);
 		}
 		if (options.containsKey("downscaleFactor")) {
-			downscaleFactor = TiConvert.toFloat(options.get("downscaleFactor"),0.15f);
+			downscaleFactor = TiConvert.toFloat(options.get("downscaleFactor"), 0.15f);
 		}
 		if (options.containsKey("fps")) {
 			fps = TiConvert.toInt(options.get("fps"), -1);
@@ -136,40 +153,47 @@ public class BlurViewProxy extends TiViewProxy
 	}
 
 	@Kroll.setProperty
-	public void downscaleFactor(float factor){
+	public void downscaleFactor(float factor)
+	{
 		downscaleFactor = factor;
 		blurLayout.setDownscaleFactor(factor);
 	}
 
 	@Kroll.setProperty
-	public void blurRadius(int factor){
+	public void blurRadius(int factor)
+	{
 		blurRadius = factor;
 		blurLayout.setBlurRadius(factor);
 	}
 
 	@Kroll.setProperty
-	public void fps(int factor){
+	public void fps(int factor)
+	{
 		fps = factor;
 		blurLayout.setFPS(factor);
 	}
 
 	@Kroll.getProperty
-	public float downscaleFactor(){
+	public float downscaleFactor()
+	{
 		return blurLayout.getDownscaleFactor();
 	}
 
 	@Kroll.getProperty
-	public int blurRadius(){
+	public int blurRadius()
+	{
 		return blurLayout.getBlurRadius();
 	}
 
 	@Kroll.getProperty
-	public int fps(){
+	public int fps()
+	{
 		return blurLayout.getFPS();
 	}
 
 	@Kroll.method
-	public void invalidate(){
+	public void invalidate()
+	{
 		blurLayout.invalidate();
 	}
 }

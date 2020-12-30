@@ -10,22 +10,16 @@ package ti.blurview;
 
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
-
-import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
+import org.appcelerator.titanium.TiApplication;
 
-
-@Kroll.module(name="TiView", id="ti.blurview")
+@Kroll.module(name = "TiView", id = "ti.blurview")
 public class TiBlurViewModule extends KrollModule
 {
-
 	// Standard Debugging variables
 	private static final String LCAT = "TiBlurViewModule";
 	private static final boolean DBG = TiConfig.LOGD;
-
-	// You can define constants with @Kroll.constant, for example:
-	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 
 	public TiBlurViewModule()
 	{
@@ -33,7 +27,7 @@ public class TiBlurViewModule extends KrollModule
 	}
 
 	@Kroll.onAppCreate
-	public static void onAppCreate(TiApplication app){}
-
-
+	public static void onAppCreate(TiApplication app)
+	{
+	}
 }
