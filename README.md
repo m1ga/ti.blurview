@@ -1,8 +1,13 @@
-# Ti.BlurView
+# Ti.Blurview
+## Android BlurView module for Appcelerator Titanium
+
+<span class="badge-patreon"><a href="https://www.patreon.com/michaelgangolf" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
 
 <img src="screen.gif"/><br/>
 
-Based on: https://github.com/CameraKit/blurkit-android
+Simple Android BlurView module for Appcelerator Titanium. Based on: https://github.com/CameraKit/blurkit-android
+
+### Usage
 
 ```xml
 <modules>
@@ -19,6 +24,8 @@ var blur = require("ti.blurview");
 var blurView = blur.createBlurView({});
 ```
 
+### API
+
 <b>Methods:</b>
 * startBlur()
 * pauseBlur()
@@ -30,7 +37,7 @@ var blurView = blur.createBlurView({});
 * blurRadius (int)
 * downscaleFactor (float)
 
-<b>Example:</b>
+### Example:
 
 ```javascript
 var win = Ti.UI.createWindow({
