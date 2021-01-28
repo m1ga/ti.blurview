@@ -44,7 +44,7 @@ var img = Ti.UI.createImageView({
 })
 var blurview = require("ti.blurview").createBlurView({
 	blurRadius: 20,
-    backgroundColor: "#88000000",
+    backgroundColor: "#55ffffff",
 	width: Ti.UI.FILL,
 	height: 100,
 	top: 100
@@ -83,7 +83,7 @@ var btn1 = Ti.UI.createButton({
 	title: "move"
 })
 
-view_menu.add([btn1, btn2]);
+view_menu.add(btn1);
 
 btn1.addEventListener("click", function(e) {
 	blurview.animate({
