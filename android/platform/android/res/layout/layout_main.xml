@@ -6,10 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:blurkit="http://schemas.android.com/apk/res-auto">
 
-    <io.alterac.blurkit.BlurLayout
-        android:id="@+id/blurLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/blurLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	app:realtimeBlurRadius="20dp"
+	app:realtimeOverlayColor="#8000"
     />
 
 </FrameLayout>
