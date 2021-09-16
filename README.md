@@ -9,6 +9,14 @@ Simple Android BlurView module for Appcelerator Titanium. Based on: https://gith
 
 ### Usage
 
+add
+```
+repositories {
+	maven { url 'https://jitpack.io' }
+}
+```
+to your `build.gradle`
+
 ```xml
 <modules>
   <module platform="android">ti.blurview</module>
