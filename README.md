@@ -15,7 +15,7 @@ repositories {
 	maven { url 'https://jitpack.io' }
 }
 ```
-to your `build.gradle`
+to your `build.gradle`. If you don't have one you can create it in `app/platform/android/build.gradle`
 
 ```xml
 <modules>
