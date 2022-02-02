@@ -1,7 +1,7 @@
 # Ti.Blurview
 ## Android BlurView module for Appcelerator Titanium
 
-<span class="badge-patreon"><a href="https://www.patreon.com/michaelgangolf" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
+<span class="badge-buymeacoffee"><a href="https://www.buymeacoffee.com/miga" title="donate"><img src="https://img.shields.io/badge/buy%20me%20a%20coke-donate-orange.svg" alt="Buy Me A Coke donate button" /></a></span>
 
 <img src="screen.gif"/><br/>
 
@@ -50,12 +50,17 @@ var img = Ti.UI.createImageView({
 	height: 400,
 	top: 0
 })
-var blurview = require("ti.blurview").createBlurView({
-	blurRadius: 20,
-    backgroundColor: "#55ffffff",
-	width: Ti.UI.FILL,
+var contentView = Ti.UI.createView({
 	height: 100,
 	top: 100
+})
+var lbl = Ti.UI.createLabel({
+	text: "Content",
+	color: "#000"
+})
+var blurview = require("ti.blurview").createBlurView({
+	blurRadius: 20,
+	backgroundColor: "#55ffffff"
 });
 var view_menu = Ti.UI.createView({
 	bottom: 0,
@@ -64,7 +69,9 @@ var view_menu = Ti.UI.createView({
 	layout: "vertical",
 	backgroundColor: "#efefef"
 })
-win.add([img, blurview, view_menu]);
+contentView.add(blurview)
+contentView.add(lbl)
+win.add([img, contentView, view_menu]);
 
 var lbl1 = Ti.UI.createLabel({
 	text: "Blur: 2",
@@ -94,7 +101,7 @@ var btn1 = Ti.UI.createButton({
 view_menu.add(btn1);
 
 btn1.addEventListener("click", function(e) {
-	blurview.animate({
+	contentView.animate({
 		top: 400,
 		duration: 4000,
 		autoreverse: true
