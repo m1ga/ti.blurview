@@ -4,17 +4,17 @@
  * Copyright (c) 2009-2017 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
- *
  */
 package ti.blurview;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
+
 import com.github.mmin18.widget.RealtimeBlurView;
+
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.TiConfig;
@@ -23,99 +23,87 @@ import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.view.TiUIView;
 
 @Kroll.proxy(creatableInModule = TiBlurViewModule.class)
-public class BlurViewProxy extends TiViewProxy
-{
-	// Standard Debugging variables
-	private static final String LCAT = "BlurViewProxy";
-	private static final boolean DBG = TiConfig.LOGD;
-	RealtimeBlurView blurLayout;
-	private int blurRadius = -1;
-	private float downscaleFactor = -1.0f;
-	private int fps = -1;
-	private int col = -1;
+public class BlurViewProxy extends TiViewProxy {
+    // Standard Debugging variables
+    private static final String LCAT = "BlurViewProxy";
+    private static final boolean DBG = TiConfig.LOGD;
+    RealtimeBlurView blurLayout;
+    private int blurRadius = -1;
+    private int col = -1;
 
-	private class BlurView extends TiUIView
-	{
-		public BlurView(TiViewProxy proxy)
-		{
-			super(proxy);
-			String packageName = proxy.getActivity().getPackageName();
-			Resources resources = proxy.getActivity().getResources();
-			View viewWrapper;
+    // Constructor
+    public BlurViewProxy() {
+        super();
+    }
 
-			int resId_viewHolder;
-			int resIdPublish;
+    @Override
+    public TiUIView createView(Activity activity) {
+        TiUIView view = new BlurView(this);
+        view.getLayoutParams().autoFillsHeight = true;
+        view.getLayoutParams().autoFillsWidth = true;
+        return view;
+    }
 
-			resId_viewHolder = resources.getIdentifier("layout_main", "layout", packageName);
-			resIdPublish = resources.getIdentifier("blurLayout", "id", packageName);
+    // Handle creation options
+    @Override
+    public void handleCreationDict(KrollDict options) {
+        super.handleCreationDict(options);
 
-			LayoutInflater inflater = LayoutInflater.from(proxy.getActivity());
-			viewWrapper = inflater.inflate(resId_viewHolder, null);
-			blurLayout = (RealtimeBlurView) viewWrapper.findViewById(resIdPublish);
+        if (options.containsKey("blurFactor")) {
+            blurRadius = TiConvert.toInt(options.get("blurRadius"), 2);
+        }
+        if (options.containsKey("backgroundColor")) {
+            col = TiConvert.toColor(TiConvert.toString(options.get("backgroundColor"), "#88000000"));
+        }
+    }
 
-			if (blurRadius != -1) {
-				blurLayout.setBlurRadius(blurRadius);
-			}
-			if (col != -1) {
-				blurLayout.setOverlayColor(col);
-			}
+    @Kroll.setProperty
+    public void blurRadius(int factor) {
+        blurRadius = factor;
+        blurLayout.setBlurRadius(blurRadius);
+    }
 
-			setNativeView(viewWrapper);
-		}
+    @Kroll.setProperty
+    public void backgroundColor(int factor) {
+        col = factor;
+        blurLayout.setOverlayColor(col);
+    }
 
-		@Override
-		public void processProperties(KrollDict d)
-		{
-			super.processProperties(d);
-		}
-	}
+    @Kroll.getProperty
+    public int blurRadius() {
+        return blurRadius;
+    }
 
-	// Constructor
-	public BlurViewProxy()
-	{
-		super();
-	}
+    private class BlurView extends TiUIView {
+        public BlurView(TiViewProxy proxy) {
+            super(proxy);
+            String packageName = proxy.getActivity().getPackageName();
+            Resources resources = proxy.getActivity().getResources();
+            View viewWrapper;
 
-	@Override
-	public TiUIView createView(Activity activity)
-	{
-		TiUIView view = new BlurView(this);
-		view.getLayoutParams().autoFillsHeight = true;
-		view.getLayoutParams().autoFillsWidth = true;
-		return view;
-	}
+            int resId_viewHolder;
+            int resIdPublish;
 
-	// Handle creation options
-	@Override
-	public void handleCreationDict(KrollDict options)
-	{
-		super.handleCreationDict(options);
+            resId_viewHolder = resources.getIdentifier("layout_main", "layout", packageName);
+            resIdPublish = resources.getIdentifier("blurLayout", "id", packageName);
 
-		if (options.containsKey("blurFactor")) {
-			blurRadius = TiConvert.toInt(options.get("blurRadius"), 2);
-		}
-		if (options.containsKey("backgroundColor")) {
-			col = TiConvert.toColor(TiConvert.toString(options.get("backgroundColor"),"#88000000"));
-		}
-	}
+            LayoutInflater inflater = LayoutInflater.from(proxy.getActivity());
+            viewWrapper = inflater.inflate(resId_viewHolder, null);
+            blurLayout = viewWrapper.findViewById(resIdPublish);
 
-	@Kroll.setProperty
-	public void blurRadius(int factor)
-	{
-		blurRadius = factor;
-		blurLayout.setBlurRadius(blurRadius);
-	}
+            if (blurRadius != -1) {
+                blurLayout.setBlurRadius(blurRadius);
+            }
+            if (col != -1) {
+                blurLayout.setOverlayColor(col);
+            }
 
-	@Kroll.setProperty
-	public void backgroundColor(int factor)
-	{
-		col = factor;
-		blurLayout.setOverlayColor(col);
-	}
+            setNativeView(viewWrapper);
+        }
 
-	@Kroll.getProperty
-	public int blurRadius()
-	{
-		return blurRadius;
-	}
+        @Override
+        public void processProperties(KrollDict d) {
+            super.processProperties(d);
+        }
+    }
 }

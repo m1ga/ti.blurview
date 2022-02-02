@@ -4,30 +4,25 @@
  * Copyright (c) 2009-2018 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
- *
  */
 package ti.blurview;
 
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
 import org.appcelerator.titanium.TiApplication;
 
 @Kroll.module(name = "TiView", id = "ti.blurview")
-public class TiBlurViewModule extends KrollModule
-{
-	// Standard Debugging variables
-	private static final String LCAT = "TiBlurViewModule";
-	private static final boolean DBG = TiConfig.LOGD;
+public class TiBlurViewModule extends KrollModule {
+    // Standard Debugging variables
+    private static final String LCAT = "TiBlurViewModule";
+    private static final boolean DBG = TiConfig.LOGD;
 
-	public TiBlurViewModule()
-	{
-		super();
-	}
+    public TiBlurViewModule() {
+        super();
+    }
 
-	@Kroll.onAppCreate
-	public static void onAppCreate(TiApplication app)
-	{
-	}
+    @Kroll.onAppCreate
+    public static void onAppCreate(TiApplication app) {
+    }
 }
