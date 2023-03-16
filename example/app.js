@@ -1,46 +1,3 @@
-# Ti.Blurview
-## Android BlurView module for Appcelerator Titanium
-
-<span class="badge-buymeacoffee"><a href="https://www.buymeacoffee.com/miga" title="donate"><img src="https://img.shields.io/badge/buy%20me%20a%20coke-donate-orange.svg" alt="Buy Me A Coke donate button" /></a></span>
-
-<img src="screen.gif"/><br/>
-
-Simple Android BlurView module for Appcelerator Titanium. Based on: https://github.com/mmin18/RealtimeBlurView
-
-### Usage
-
-add
-```
-repositories {
-	maven { url 'https://jcenter.bintray.com/' }
-}
-```
-to your `build.gradle`. If you don't have one you can create it in `app/platform/android/build.gradle`
-
-```xml
-<modules>
-  <module platform="android">ti.blurview</module>
-</modules>
-```
-
-```xml
-<BlurView module="ti.blurview"/>
-```
-or
-```javascript
-var blur = require("ti.blurview");
-var blurView = blur.createBlurView({});
-```
-
-### API
-
-<b>Properties:</b>
-* blurRadius (int)
-* backgroundColor (color)
-
-### Example:
-
-```javascript
 var win = Ti.UI.createWindow({
 	backgroundColor: "#fff"
 });
@@ -109,4 +66,3 @@ btn1.addEventListener("click", function(e) {
 });
 
 win.open();
-```

@@ -1,0 +1,7 @@
+repositories {
+	maven { url 'https://jcenter.bintray.com/' }
+}
+
+dependencies {
+	implementation 'com.github.mmin18:realtimeblurview:1.2.1'
+}
