@@ -5,14 +5,13 @@
 
 <img src="screen.gif"/><br/>
 
-Simple Android BlurView module for Titanium SDK. Based on: https://github.com/mmin18/RealtimeBlurView
+Simple Android BlurView module for Titanium SDK. Based on: https://github.com/Dimezis/BlurView/tree/version-2.0.6
 
 ### Usage
 
 add
 ```
 repositories {
-	mavenCentral()
 	maven { url 'https://jitpack.io' }
 }
 ```

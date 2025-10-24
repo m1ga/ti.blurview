@@ -1,14 +1,12 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#00ffffff">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <com.github.mmin18.widget.RealtimeBlurView
-        android:id="@+id/blurLayout"
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:realtimeBlurRadius="20dp"
-        app:realtimeOverlayColor="#8000" />
+        app:blurOverlayColor="#66FFFFFF" />
 
-</FrameLayout>
+</LinearLayout>

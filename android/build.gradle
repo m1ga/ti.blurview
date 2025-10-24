@@ -4,5 +4,5 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.github.mmin18:RealtimeBlurView:82df3520b4'
+	implementation 'com.github.Dimezis:BlurView:version-2.0.6'
 }
