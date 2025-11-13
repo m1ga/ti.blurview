@@ -9,12 +9,6 @@ Simple Android BlurView module for Titanium SDK. Based on: https://github.com/mm
 
 ### Usage
 
-add
-```
-repositories {
-	mavenCentral()
-	maven { url 'https://jitpack.io' }
-}
 ```
 to your `build.gradle`. If you don't have one you can create it in `app/platform/android/build.gradle`
 
