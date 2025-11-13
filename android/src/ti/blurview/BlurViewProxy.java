@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.github.mmin18.widget.RealtimeBlurView;
 

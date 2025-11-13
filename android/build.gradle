@@ -1,8 +1,0 @@
-repositories {
-	mavenCentral()
-	maven { url 'https://jitpack.io' }
-}
-
-dependencies {
-	implementation 'com.github.mmin18:RealtimeBlurView:82df3520b4'
-}
